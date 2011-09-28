@@ -21,6 +21,6 @@
   "main": "index",
   "engines": { "node": ">= 0.4.5" },
   "scripts": {
-    "test": "jasmine-node spec"
+    "test": "./node_modules/jasmine-node/bin/jasmine-node spec"
   }
 }
