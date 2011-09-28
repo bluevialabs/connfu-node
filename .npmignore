@@ -1,0 +1,5 @@
+.git*
+examples/
+spec/
+autotest.js
+.DS_Store
