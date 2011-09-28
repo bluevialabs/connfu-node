@@ -1,4 +1,4 @@
-# connFu
+# connFu Node.js DSL [![Build Status](https://secure.travis-ci.org/bluevialabs/connfu-node.png)](http://travis-ci.org/bluevialabs/connfu-node)
 
 connfu package provides an easy way to get access to connFu platform using the defined DSL.
 
