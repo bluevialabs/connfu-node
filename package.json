@@ -15,8 +15,8 @@
   },
   "devDependencies": {
     "jasmine-node": "1.0.x",
-    "growl",
-    "nodewatch"
+    "growl": "1.1.x",
+    "nodewatch": "0.0.x"
   },
   "main": "index",
   "engines": { "node": ">= 0.4.5" },
