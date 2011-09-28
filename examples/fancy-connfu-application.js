@@ -5,14 +5,14 @@
 // Running this example
 // --------------------
 //
-// * First of all, you have to register into [connFu.com](http://connfu.com and create)
+// * First of all, you have to register into [connFu.com](https://connfu.com)
 // an application. You will receive an **application token** which will be very useful ;)
 //
 // * Then, install the connFu npm package:
 //
 //          $ npm install connfu
 //
-// * Then get the source of this example from [here](https://github.com/dogfood20/connfu-node/blob/master/examples/fancy-connfu-application.js)
+// * Then get the source of this example from [here](https://github.com/bluevialabs/connfu-node/blob/master/examples/fancy-connfu-application.js)
 //   and run it!
 //
 //          $ node fancy-connfu-application.js <application_token>

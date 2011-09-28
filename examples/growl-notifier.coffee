@@ -6,6 +6,20 @@
 # 
 # Once launched, it listens to all the configured events in the application
 # and shows them as a Growl notification
+#
+### Running this example
+#
+# * First of all, you have to register into [connFu.com](https://connfu.com)
+#   an application. You will receive an **application token** which will be very useful ;)
+#
+# * Then, install the `connFu` and `growl` npm packages:
+#
+#          $ npm install growl connfu
+#
+# * Then get the source of this example from [here](https://github.com/bluevialabs/connfu-node/blob/master/examples/growl-notifier.coffee)
+#   and run it!
+#
+#          $ coffee growl-notifier.coffee <application_token>
 
 # Annotated source
 # ----------------
