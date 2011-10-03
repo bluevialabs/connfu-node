@@ -5,6 +5,10 @@
     
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" media="all" href="docco.css" />
+    <link rel="stylesheet" media="all" href="stylesheets/sh_style.css" />
+    
+    <script type="text/javascript" src="javascripts/sh_main.min.js"></script>
+    <script type="text/javascript" src="javascripts/sh_javascript.min.js"></script>
     
     <style type="text/css">
     body {
@@ -38,7 +42,10 @@
     pre {
       margin: 25px 0;
       padding: 5px 0;
-      border-left: 5px solid #b9b19d;
+      border-left: 5px solid #dab583;
+      color: #444;
+      font-weight: normal;
+      font-style: normal;
     }
     
     h2 {
@@ -68,7 +75,8 @@
       <p>Downloading it from npm repository:</p>
 
       <pre>
-  $ npm install connfu</pre>
+  $ npm install connfu
+</pre>
           
       <p>If you'd prefer to install the latest master version of connFu, you can clone the connfu-node source repository
          from GitHub and then install it using npm:</p>
@@ -76,7 +84,8 @@
       <pre>
   $ git clone https://github.com/dogfood20/connfu-node.git
 
-  $ npm install -g connfu-node/</pre>
+  $ npm install -g connfu-node/
+</pre>
       
 
       <h2>How to use it</h2>
@@ -85,17 +94,19 @@
 
       <p>First, require connfu package:</p>
 
-      <pre>
-  var connFu = require('connfu');</pre>
+      <pre class="sh_javascript">
+  var connFu = require('connfu');
+</pre>
 
       <p>Next, create a basic application using your connFu API KEY:</p>
 
-      <pre>
-  var app = connFu.createApp(<your_api_key>);</pre>
+      <pre class="sh_javascript">
+  var app = connFu.createApp(&lt;your_api_key&gt;);
+</pre>
 
       <p>Then, attach some event handlers:</p>
 
-      <pre>
+      <pre class="sh_javascript">
   app.on("voice", {
     join: function(params){
       console.log("The number " + params.from + " joined to the conference with number " + params.to);
@@ -103,18 +114,20 @@
     leave: function(params){
       console.log("The number " + params.from + " left the conference with number " + params.to);
     }
-  });</pre>
+  });
+</pre>
 
       <p>Finally, just listen!</p>
 
-      <pre>
-  app.listen();</pre>
+      <pre class="sh_javascript">
+  app.listen();
+</pre>
       
       <h3>Sending commands</h3>
 
       <p>The connFu package can also send commands to handle some aspects of the application:</p>
 
-      <pre>
+      <pre class="sh_javascript">
   var connFu = require('connfu');
 
   // Init application
@@ -129,10 +142,11 @@
     });
   });
 
-  (...)
+  /** (...) **/
 
   // Delete the voice channel
-  app.commands.voice("conference").delete();</pre>
+  app.commands.voice("conference").delete();
+</pre>
 
       <h2>Examples</h2>
       
@@ -142,5 +156,7 @@
       
       <p class="powered"><span>Powered by: </span><a href="http://bluevia.com" title="Bluevia Labs"><img src="images/bluevia-logo.png" alt="Bluevia Labs"></a>
     </div>
+    
+    <script type="text/javascript">sh_highlightDocument();</script>
   </body>
 </html>
