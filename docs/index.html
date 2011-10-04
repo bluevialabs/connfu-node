@@ -97,8 +97,7 @@
     </a>
     
     <div id="container">
-      <h1><img src="images/connfu-logo.png" alt="connFu"></h1><h1>connFu Node.js DSL <a href="http://travis-ci.org/bluevialabs/connfu-node"><img src="https://secure.travis-ci.org/bluevialabs/connfu-node.png" alt="Build Status">
-</a></h1>
+      <h1><img src="images/connfu-logo.png" alt="connFu"></h1><h1>connFu Node.js DSL <a href="http://travis-ci.org/bluevialabs/connfu-node"><img src="https://secure.travis-ci.org/bluevialabs/connfu-node.png" alt="Build Status" title="" /></a></h1>
 
 <p>connfu package provides an easy way to get access to <a href="http://connfu.com">connFu platform</a> using the defined DSL.</p>
 
@@ -112,7 +111,7 @@
 <p>If you'd prefer to install the latest master version of connFu, you can clone the <code>connfu-node</code> source repository
 from GitHub and then install it using <code>npm</code>:</p>
 
-<pre><code>$ git clone &quot;https://github.com/bluevialabs/connfu-node.git&quot;
+<pre><code>$ git clone "https://github.com/bluevialabs/connfu-node.git"
 
 $ npm install -g connfu-node/
 </code></pre>
@@ -133,12 +132,12 @@ $ npm install -g connfu-node/
 
 <p>Then, attach some event handlers:</p>
 
-<pre><code>app.on(&quot;voice&quot;, {
+<pre><code>app.on("voice", {
   join: function(params){
-    console.log(&quot;The number &quot; + params.from + &quot; joined to the conference with number &quot; + params.to);
+    console.log("The number " + params.from + " joined to the conference with number " + params.to);
   },
   leave: function(params){
-    console.log(&quot;The number &quot; + params.from + &quot; left the conference with number &quot; + params.to);
+    console.log("The number " + params.from + " left the conference with number " + params.to);
   }
 });
 </code></pre>
@@ -158,18 +157,18 @@ $ npm install -g connfu-node/
 var app = connFu.createApp('&lt;your_api_key&gt;');
 
 // Create a voice channel with a UK number
-app.commands.voice().create(&quot;conference&quot;, &quot;uk&quot;, {welcome_message: &quot;Welcome to the conference&quot;}, function(){
+app.commands.voice().create("conference", "uk", {welcome_message: "Welcome to the conference"}, function(){
   // Add a number to the whitelist
-  app.commands.voice(&quot;conference&quot;).whitelist().create(&quot;+44xxxxxx&quot;, &quot;rafeca&quot;, function(){    
+  app.commands.voice("conference").whitelist().create("+44xxxxxx", "rafeca", function(){    
     // Update the name of the recently whitelisted number
-    app.commands.voice(&quot;conference&quot;).whitelist(&quot;+4444xxxxxx&quot;).update(&quot;the wizard&quot;);
+    app.commands.voice("conference").whitelist("+4444xxxxxx").update("the wizard");
   });
 });
 
 /* (...) */
 
 // Delete the voice channel
-app.commands.voice(&quot;conference&quot;).delete();
+app.commands.voice("conference").delete();
 </code></pre>
 
 <p>For more thorough examples, look at the following examples</p>
