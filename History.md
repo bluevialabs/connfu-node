@@ -1,5 +1,6 @@
-0.1.0 / 2011-09-19
-==================
+## Change Log
+
+### 0.1.0 — *Sept 9, 2011*
 
   * Added Twitter provisioning commands
   * Added multiple phone number provisioning commands
@@ -10,27 +11,20 @@
   * Added a new CoffeeScript example application that shows events in Growl
   * Added inline documentation to example applications
   
-0.0.4 / 2011-08-24
-==================
+### 0.0.4 — *August 24, 2011*
 
   * Added the ability to send RSS commands via the connFu REST API
   * Standarized the format of the events data
   * Added autotest feature to ease the BDD development
 
-
-0.0.3 / 2011-07-28
-==================
+### 0.0.3 — *July 28, 2011*
 
   * Added the ability to send voice commands via the connFu REST API
 
-
-0.0.2 / 2011-07-27
-==================
+### 0.0.2 — *July 27, 2011*
 
   * Added a logging system to ease the debugging
   
-
-0.0.1 / 2011-07-26
-==================
+### 0.0.1 — *July 26, 2011*
 
   * Initial release

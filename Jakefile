@@ -17,7 +17,7 @@ task("examples",function(){
 desc("create docs");
 task("docs",function(){
     var exec = require('child_process').exec;
-    var command = 'markdown README.md | cat docs/_header.html - docs/_footer.html > docs/index.html';
+    var command = '(markdown README.md && markdown History.md) | cat docs/_header.html - docs/_footer.html > docs/index.html';
     
     console.log('\n\033[33mCreating index page based on README.md...\033[0m');
      
