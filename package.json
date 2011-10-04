@@ -1,6 +1,6 @@
 {
   "name": "connfu",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DSL for creating real time voice applications using connFu platform",
   "homepage": "http://connfu.com",
   "keywords": ["VoIP", "voice", "social", "realtime", "stream", "chat"],

@@ -1,5 +1,12 @@
 ## Change Log
 
+### 0.1.1 — *October 5, 2011*
+
+  * `connfu-node` is now public
+  * Improved documentation
+  * Added `gh-pages` with a public web page that is generated automatically
+  * Integration with Travis CI service
+
 ### 0.1.0 — *Sept 9, 2011*
 
   * Added Twitter provisioning commands
