@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var connFu = require('../');
+var connFu = require('connfu');
 var winston = require('winston');
 var colors = require('colors');
 
