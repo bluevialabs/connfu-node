@@ -1,0 +1,161 @@
+#!/usr/bin/env node
+
+var connFu = require('../');
+var winston = require('winston');
+var colors = require('colors');
+
+var logger = new(winston.Logger)({
+  transports: [
+  new(winston.transports.Console)({
+    level: "error"
+  })]
+}).cli();
+connFu.setLogger(logger);
+
+var printResponse = function(err, data) {
+  if (err) {
+    return;
+  }
+  if (data) {
+    console.log(JSON.stringify(data, null, 2));
+  } else {
+    console.log('Command executed!');
+  }
+};
+
+var printUsage = function() {
+  var getCommand = function(command, description) {
+    var command = '  connfu app '.red + 'a1b2c3d4 '.yellow + command.blue;
+    var i, l = command.length;
+    for(i=0; i<110-l; i++) {
+      command = command + ' ';
+    }
+    return command;
+  }
+  
+  console.log([
+    'Usage:'.bold.underline,
+    'connfu app <application_token> <command> <arguments>',
+    'Examples'.bold.underline,
+    '',
+    '- Get application info:',
+    getCommand('', 'Get application info'),
+    '',
+    '- Deal with voice channels:',
+    getCommand('voice'),
+    getCommand('voice get    <channel_name>'),
+    getCommand('voice remove <channel_name>'),
+    getCommand('voice update <channel_name> <json_params>'),
+    getCommand('voice create <channel_name> <country> <json_params>'),
+    '  Deal with the whitelist:',
+    getCommand('voice whitelist <channel_name>'),
+    getCommand('voice whitelist <channel_name> get <phone_number>'),
+    getCommand('voice whitelist <channel_name> remove'),
+    getCommand('voice whitelist <channel_name> remove <phone_number>'),
+    getCommand('voice whitelist <channel_name> update <phone_number> <name>'),
+    getCommand('voice whitelist <channel_name> create <phone_number> <name>'),
+    '  Deal with the phone numbers:',
+    getCommand('voice phones <channel_name>'),
+    getCommand('voice phones <channel_name> create <country>'),
+    getCommand('voice whitelist <channel_name> remove <phone_number>'),
+    '',
+    '- Deal with RSS channels:',
+    getCommand('rss', 'Get all RSS channels'),
+    getCommand('rss get    <channel_name>'),
+    getCommand('rss remove <channel_name>'),
+    getCommand('rss update <channel_name> <url>'),
+    getCommand('rss create <channel_name> <url>'),
+    '',
+    '- Deal with Twitter channels:',
+    getCommand('twitter', 'Get all RSS channels'),
+    getCommand('twitter get    <channel_name>'),
+    getCommand('twitter remove <channel_name>'),
+    getCommand('twitter create <channel_name> <origin|mentioned> <accounts> <filters>'),
+  ].join('\n'));
+};
+
+
+var params = process.argv.slice(2);
+
+if (params.length < 2) {
+  printUsage();
+}
+
+if(params[0] === 'app') {
+  // App commands!!
+  var app = connFu.createApp(params[1]);
+  
+  var channelType = params[2] || 'getApp';
+
+  if (channelType === 'getApp') {
+    return app.commands.getApp(printResponse);
+  }
+  
+  if (['voice', 'rss', 'twitter'].indexOf(channelType) !== 0) {
+    return printUsage();
+  }
+
+  var command = params[3] || 'get';
+  
+  // Convert string parameters to arrays
+  params = params.map(function(el, key){
+    if (key > 4) {
+      if (typeof(el) === 'string' && (el.indexOf('{') === 0 || el.indexOf('[') === 0)) {
+        return JSON.parse(el);
+      }
+    }
+    return el;
+  });
+  
+  switch(command) {
+    case 'get':
+      app.commands[channelType](params[4])[command](printResponse);
+      break;
+
+    case 'update':
+    case 'remove':
+      if (params.length < 5) {
+        return printUsage();
+      }
+      var functParams = params.length > 5 ? params.slice(5) : [];
+      functParams.push(printResponse);
+      
+      app.commands[channelType](params[4])[command].apply(this, functParams);
+      break;
+    
+    case 'create':
+      if (params.length < 6) {
+        return printUsage();
+      }
+      
+      var functParams = params.slice(4);
+      functParams.push(printResponse);
+      
+      app.commands[channelType]()[command].apply(this, functParams);
+      break;
+    
+    case 'phones':
+    case 'whitelist':
+    
+      var channelName = params[4];
+      var method = params[5] || 'get';
+      
+      switch(method) {
+        case 'get':
+        case 'remove':
+          app.commands[channelType](channelName)[command](params[6])[method](printResponse);
+          break;
+
+        case 'create':
+          var functParams = params.slice(6);
+          functParams.push(printResponse);
+          console.log(functParams);
+        
+          app.commands[channelType](channelName)[command]()[method].apply(this, functParams);
+          break;
+      }
+      break;
+  }
+} else {
+  printUsage();
+}

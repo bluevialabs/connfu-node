@@ -11,7 +11,8 @@
     "url": "https://github.com/bluevialabs/connfu-node.git"
   },
   "dependencies": {
-    "winston": "0.3.x"
+    "winston": "0.3.x",
+    "colors": "0.5.x"
   },
   "devDependencies": {
     "jasmine-node": "1.0.x",
@@ -20,6 +21,9 @@
     "jake": "0.1.x"
   },
   "main": "index",
+  "bin" : {
+    "connfu" : "./bin/connfu"
+  },
   "engines": { "node": ">= 0.4.5" },
   "scripts": {
     "test": "./node_modules/jasmine-node/bin/jasmine-node spec"
