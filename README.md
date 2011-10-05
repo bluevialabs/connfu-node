@@ -48,6 +48,12 @@ Finally, just listen!
     
     app.listen();
 
+### Using the CLI
+
+When you install connFu node package, you get a CLI that allows you to do some common tasks fast and easily:
+
+![CLI interface](http://bluevialabs.github.com/connfu-node/images/screenshot_cli.png)
+
 ### Sending commands
 
 The `connFu` package can also send commands to handle some aspects of the application:
