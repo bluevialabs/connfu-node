@@ -34,10 +34,9 @@ var printUsage = function() {
   }
   
   console.log([
-    'Usage:'.bold.underline,
+    'Usage'.bold.underline,
     'connfu app <application_token> <command> <arguments>',
     'Examples'.bold.underline,
-    '',
     '- Get application info:',
     getCommand('', 'Get application info'),
     '',
@@ -78,7 +77,7 @@ var printUsage = function() {
 var params = process.argv.slice(2);
 
 if (params.length < 2) {
-  printUsage();
+  return printUsage();
 }
 
 if(params[0] === 'app') {
