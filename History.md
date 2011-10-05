@@ -1,5 +1,9 @@
 ## Change Log
 
+### 0.2.0 — *October 6, 2011*
+
+  * Added `connfu` CLI to allow fast and easy application manipulation 
+
 ### 0.1.1 — *October 5, 2011*
 
   * `connfu-node` is now public
