@@ -18,8 +18,8 @@ describe('API Client', function(){
     // Create mock that returns a 401 HTTP error
     spy_https_request.throwHttpError(null, '1234', 401);
   
-    app.commands.getApp(function(){} , function(e) {
-      expect(e).toEqual({message:'Server returned a 401 HTTP error', code: 401});
+    app.commands.getApp(function(err, data) {
+      expect(err).toEqual({message:'Server returned a 401 HTTP error', code: 401});
       asyncSpecDone();
     });
     
@@ -30,8 +30,8 @@ describe('API Client', function(){
     // Create mock that returns a general error
     spy_https_request.throwGeneralError("ENOTFOUND, Domain name not found", "ENOTFOUND");
   
-    app.commands.getApp(function(){} , function(e) {
-      expect(e).toEqual({message:'ENOTFOUND, Domain name not found', code: "ENOTFOUND"});
+    app.commands.getApp(function(err, data) {
+      expect(err).toEqual({message:'ENOTFOUND, Domain name not found', code: "ENOTFOUND"});
       asyncSpecDone();
     });
     
@@ -42,7 +42,8 @@ describe('API Client', function(){
     // Create mock for getting the stream
     spy_https_request.returnStream(null, '1234', 'test');
     
-    app.commands.getApp(function(data){
+    app.commands.getApp(function(err, data){
+      expect(err).toEqual(null);
       expect(data.name).toEqual('test');
       asyncSpecDone();
     });
@@ -77,7 +78,8 @@ describe('API Client', function(){
       };
     });
     
-    app.commands.voice("test").get(function(data){
+    app.commands.voice("test").get(function(err, data){
+      expect(err).toEqual(null);
       expect(data.uid).toEqual('test');
       expect(data.phone).toEqual('+44100');
       expect(data.privacy).toEqual('public');
@@ -116,7 +118,8 @@ describe('API Client', function(){
       };
     });
     
-    app.commands.voice('test').update({topic: 'new topic'}, function(data){
+    app.commands.voice('test').update({topic: 'new topic'}, function(err, data){
+      expect(err).toEqual(null);
       expect(data).toEqual(null);
       asyncSpecDone();
     });
@@ -153,7 +156,8 @@ describe('API Client', function(){
       };
     });
     
-    app.commands.voice('test').update({welcome_message: 'Hello, world'}, function(data){
+    app.commands.voice('test').update({welcome_message: 'Hello, world'}, function(err, data){
+      expect(err).toEqual(null);
       expect(data).toEqual(null);
       asyncSpecDone();
     });
@@ -190,7 +194,8 @@ describe('API Client', function(){
       };
     });
     
-    app.commands.voice('test').update({rejected_message: 'Bye, world'}, function(data){
+    app.commands.voice('test').update({rejected_message: 'Bye, world'}, function(err, data){
+      expect(err).toEqual(null);
       expect(data).toEqual(null);
       asyncSpecDone();
     });
@@ -227,7 +232,8 @@ describe('API Client', function(){
       };
     });
     
-    app.commands.voice('test').update({privacy: 'public'}, function(data){
+    app.commands.voice('test').update({privacy: 'public'}, function(err, data){
+      expect(err).toEqual(null);
       expect(data).toEqual(null);
       asyncSpecDone();
     });
@@ -279,7 +285,8 @@ describe('API Client', function(){
       welcome_message: 'Hello, world',
       rejected_message: 'Bye, world',
       privacy: 'public',
-    }, function(data){
+    }, function(err, data) {
+      expect(err).toEqual(null);
       expect(data).toEqual('/' + apiVersion + '/channels/voice/test');
       asyncSpecDone();
     });
@@ -322,7 +329,8 @@ describe('API Client', function(){
       };
     });
     
-    app.commands.voice().create("conference", "uk", {}, function(data){
+    app.commands.voice().create("conference", "uk", {}, function(err, data){
+      expect(err).toEqual(null);
       expect(data).toEqual('/' + apiVersion + '/channels/voice/test');
       asyncSpecDone();
     });
@@ -358,7 +366,8 @@ describe('API Client', function(){
       };
     });
     
-    app.commands.voice("test").remove(function(data){
+    app.commands.voice("test").remove(function(err, data){
+      expect(err).toEqual(null);
       expect(data).toEqual(null);
       asyncSpecDone();
     });
@@ -384,6 +393,24 @@ describe('API Client', function(){
     spyOn(https, 'request').andCallFake(function(options, callback){
       expect(options.path).toEqual('/' + apiVersion + '/channels/voice/test/whitelisted');
       expect(options.method).toEqual('POST');
+      setTimeout(function(){
+        callback({
+          headers: {
+            location: '/' + apiVersion + '/channels/voice/test/whitelist/%"B440123"'
+          },
+          statusCode: 201,
+          on: function(data, newCallback) {
+            setTimeout(function(){
+              if (data === 'data') {
+                newCallback('{"name":"rafeca","phone":"+440123"}');
+              } else if (data === 'end'){
+                newCallback();
+              }
+            }, 0);
+          },
+          end: function(){}
+        });
+      }, 0);
       return {
         write: function(data) {
           expect(data).toEqual('{"name":"rafeca","phone":"+440123"}');
@@ -393,7 +420,13 @@ describe('API Client', function(){
       };
     });
     
-    app.commands.voice('test').whitelist().create('+440123', 'rafeca');
+    app.commands.voice('test').whitelist().create('+440123', 'rafeca', function(err, data){
+      expect(err).toEqual(null);
+      expect(data).toEqual({name: 'rafeca', phone: '+440123'});
+      asyncSpecDone();
+    });
+    
+    asyncSpecWait();
   });
   
   it("should delete all the whitelists entries of a voice channel", function(){

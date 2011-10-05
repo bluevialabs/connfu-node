@@ -104,11 +104,11 @@
     <div id="container">
       <h1><img src="images/connfu-logo.png" alt="connFu"></h1><h1>connFu Node.js DSL <a href="http://travis-ci.org/bluevialabs/connfu-node"><img src="https://secure.travis-ci.org/bluevialabs/connfu-node.png" alt="Build Status" title="" /></a></h1>
 
-<p>connfu package provides an easy way to get access to <a href="http://connfu.com">connFu platform</a> using the defined DSL.</p>
+<p>connfu package provides an easy way to get access to <a href="http://connfu.com">connFu platform</a> using Node.js</p>
 
 <h2>How to install</h2>
 
-<p>Downloading it from <code>npm</code> repository:</p>
+<p>The eassiest way is by installing it from the <code>npm</code> repository:</p>
 
 <pre><code>$ npm install connfu
 </code></pre>
@@ -162,9 +162,9 @@ $ npm install -g connfu-node/
 var app = connFu.createApp('&lt;your_api_key&gt;');
 
 // Create a voice channel with a UK number
-app.commands.voice().create("conference", "uk", {welcome_message: "Welcome to the conference"}, function(){
+app.commands.voice().create("conference", "uk", {welcome_message: "Welcome!"}, function(err, data){
   // Add a number to the whitelist
-  app.commands.voice("conference").whitelist().create("+44xxxxxx", "rafeca", function(){    
+  app.commands.voice("conference").whitelist().create("+44xxxxxx", "rafeca", function(err, data){    
     // Update the name of the recently whitelisted number
     app.commands.voice("conference").whitelist("+4444xxxxxx").update("the wizard");
   });

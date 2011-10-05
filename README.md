@@ -1,10 +1,10 @@
 # connFu Node.js DSL [![Build Status](https://secure.travis-ci.org/bluevialabs/connfu-node.png)](http://travis-ci.org/bluevialabs/connfu-node)
 
-connfu package provides an easy way to get access to [connFu platform](http://connfu.com) using the defined DSL.
+connfu package provides an easy way to get access to [connFu platform](http://connfu.com) using Node.js
 
 ## How to install
 
-Downloading it from `npm` repository:
+The eassiest way is by installing it from the `npm` repository:
 
     
     $ npm install connfu
@@ -59,9 +59,9 @@ The `connFu` package can also send commands to handle some aspects of the applic
     var app = connFu.createApp('<your_api_key>');
 
     // Create a voice channel with a UK number
-    app.commands.voice().create("conference", "uk", {welcome_message: "Welcome to the conference"}, function(){
+    app.commands.voice().create("conference", "uk", {welcome_message: "Welcome!"}, function(err, data){
       // Add a number to the whitelist
-      app.commands.voice("conference").whitelist().create("+44xxxxxx", "rafeca", function(){    
+      app.commands.voice("conference").whitelist().create("+44xxxxxx", "rafeca", function(err, data){    
         // Update the name of the recently whitelisted number
         app.commands.voice("conference").whitelist("+4444xxxxxx").update("the wizard");
       });
@@ -81,7 +81,6 @@ For more thorough examples, look at the following examples
 [growl-notifier.coffee](http://bluevialabs.github.com/connfu-node/growl-notifier.html) - CoffeeScript application that notfies via Growl the received events
 
 [commands.js](http://bluevialabs.github.com/connfu-node/commands.html) - Express.js application that exposes all the DSL commands to a RESTful interface
-
 
 ## Running Tests
 

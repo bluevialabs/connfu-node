@@ -48,8 +48,10 @@ var connfuApp = connFu.createApp(process.argv[2]);
 //
 app.get('/', function(req, res){
   connfuApp.commands.getApp(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -75,8 +77,10 @@ app.get('/', function(req, res){
 //
 app.get('/voice', function(req, res){
   connfuApp.commands.voice().get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) { 
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -85,8 +89,10 @@ app.get('/voice', function(req, res){
 // Similar response as get all voice channels
 app.get('/voice/:uid', function(req, res){
   connfuApp.commands.voice(req.params.uid).get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) { 
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -105,10 +111,11 @@ app.post('/voice', function(req, res){
       welcome_message: req.body.welcome_message,
       rejected_message: req.body.rejected_message,
       topic: req.body.topic
+    },
+    function(err, data) { 
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
     }
-    ,
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
   );
 });
 
@@ -124,8 +131,10 @@ app.put('/voice/:uid', function(req, res){
       rejected_message: req.body.rejected_message,
       topic: req.body.topic
     },
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) { 
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -134,8 +143,10 @@ app.put('/voice/:uid', function(req, res){
 // *This method doesn't return anything*
 app.delete('/voice/:uid', function(req, res){
   connfuApp.commands.voice(req.params.uid).remove(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) { 
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -154,8 +165,10 @@ app.delete('/voice/:uid', function(req, res){
 //
 app.get('/voice/:uid/whitelist', function(req, res){
   connfuApp.commands.voice(req.params.uid).whitelist().get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -164,8 +177,10 @@ app.get('/voice/:uid/whitelist', function(req, res){
 // Similar response as get the full whitelist
 app.get('/voice/:uid/whitelist/:phone', function(req, res){
   connfuApp.commands.voice(req.params.uid).whitelist(req.params.phone).get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -178,8 +193,10 @@ app.post('/voice/:uid/whitelist', function(req, res){
   connfuApp.commands.voice(req.params.uid).whitelist().create(
     req.body.phone,
     req.body.name,
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -191,8 +208,10 @@ app.post('/voice/:uid/whitelist', function(req, res){
 app.put('/voice/:uid/whitelist/:phone', function(req, res){
   connfuApp.commands.voice(req.params.uid).whitelist(req.params.phone).update(
     req.body.phone,
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -201,8 +220,10 @@ app.put('/voice/:uid/whitelist/:phone', function(req, res){
 // *This method doesn't return anything*
 app.delete('/voice/:uid/whitelist/:phone', function(req, res){
   connfuApp.commands.voice(req.params.uid).whitelist(req.params.phone).remove(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -211,8 +232,10 @@ app.delete('/voice/:uid/whitelist/:phone', function(req, res){
 // *This method doesn't return anything*
 app.delete('/voice/:uid/whitelist', function(req, res){
   connfuApp.commands.voice(req.params.uid).whitelist().remove(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -231,8 +254,10 @@ app.delete('/voice/:uid/whitelist', function(req, res){
 //
 app.get('/voice/:uid/phones', function(req, res){
   connfuApp.commands.voice(req.params.uid).phones().get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -244,8 +269,10 @@ app.get('/voice/:uid/phones', function(req, res){
 app.post('/voice/:uid/phones', function(req, res){
   connfuApp.commands.voice(req.params.uid).phones().create(
     req.body.country,
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -254,8 +281,10 @@ app.post('/voice/:uid/phones', function(req, res){
 // *This method doesn't return anything*
 app.delete('/voice/:uid/phones/:phone', function(req, res){
   connfuApp.commands.voice(req.params.uid).phones(req.params.phone).remove(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -274,8 +303,10 @@ app.delete('/voice/:uid/phones/:phone', function(req, res){
 //
 app.get('/rss', function(req, res){
   connfuApp.commands.rss().get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -286,8 +317,10 @@ app.get('/rss', function(req, res){
 // Similar to get all RSS channels response
 app.get('/rss/:uid', function(req, res){
   connfuApp.commands.rss(req.params.uid).get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -298,8 +331,10 @@ app.post('/rss', function(req, res){
   connfuApp.commands.rss().create(
     req.body.uid,
     req.body.url,
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -309,8 +344,10 @@ app.post('/rss', function(req, res){
 app.put('/rss/:uid', function(req, res){
   connfuApp.commands.rss(req.params.uid).update(
     req.body.url,
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -319,8 +356,10 @@ app.put('/rss/:uid', function(req, res){
 // *This method doesn't return anything*
 app.delete('/rss/:uid', function(req, res){
   connfuApp.commands.rss(req.params.uid).remove(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -343,8 +382,10 @@ app.delete('/rss/:uid', function(req, res){
 //
 app.get('/twitter', function(req, res){
   connfuApp.commands.twitter().get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -355,8 +396,10 @@ app.get('/twitter', function(req, res){
 // Similar to get all Twitter channels response
 app.get('/twitter/:uid', function(req, res){
   connfuApp.commands.twitter(req.params.uid).get(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -381,8 +424,10 @@ app.post('/twitter_mentioned', function(req, res){
     "mentioned",
     req.body.account,
     req.body.filters,
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -400,8 +445,10 @@ app.post('/twitter_origin', function(req, res){
     "origin",
     req.body.accounts,
     req.body.filters,
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
@@ -410,8 +457,10 @@ app.post('/twitter_origin', function(req, res){
 // *This method doesn't return anything*
 app.delete('/twitter/:uid', function(req, res){
   connfuApp.commands.twitter(req.params.uid).remove(
-    function(data) { res.json(data); },
-    function(err)  { res.json(err.message, err.code); }
+    function(err, data) {
+      if (err) { return res.json(err.message, err.code); }
+      res.json(data);
+    }
   );
 });
 
